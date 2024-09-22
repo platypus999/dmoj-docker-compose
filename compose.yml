@@ -7,13 +7,12 @@ services:
     image: mariadb:11.4
     restart: always
     environment:
-      # - MARIADB_RANDOM_ROOT_PASSWORD=1
-      - MARIADB_ROOT_PASSWORD=pass
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
     volumes:
       - 'db-data:/var/lib/mysql:Z'
       - './db-entrypoint.sql:/docker-entrypoint-initdb.d/db-entrypoint.sql'
-    ports:
-     - 3306:3306
+    # ports:
+    #  - 3306:3306
 
   bridged:
     build: ./site
