@@ -1,0 +1,63 @@
+services:
+  redis:
+    image: redis:7.0
+    restart: always
+
+  db:
+    image: mariadb:11.4
+    restart: always
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
+    volumes:
+      - 'db-data:/var/lib/mysql:Z'
+      - './db-entrypoint.sql:/docker-entrypoint-initdb.d/db-entrypoint.sql'
+    # ports:
+    #  - 3306:3306
+
+  bridged:
+    build: ./site
+    restart: always
+    stdin_open: true
+    env_file:
+      - site.env
+    command: python3 manage.py runbridged
+    
+  celery:
+    build: ./site
+    stdin_open: true
+    env_file:
+      - site.env
+    command: celery -A dmoj_celery worker
+    depends_on:
+      - redis
+
+  site:
+    build: ./site
+    restart: always
+    stdin_open: true
+    env_file:
+      - site.env
+    volumes:   
+      - './setup-db.sh:/setup-db.sh'
+    command: /setup-db.sh
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+      - bridged
+      - celery
+
+  judge:
+    build: ./judge
+    restart: always
+    volumes:
+      - ./problems:/problems
+    cap_add:
+      - SYS_PTRACE
+    command: run -c /problems/judge.yml bridged ${JUDGE_NAME} ${JUDGE_KEY}
+    depends_on:
+      - site
+
+volumes:
+  db-data:
