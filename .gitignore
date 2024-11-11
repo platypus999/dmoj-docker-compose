@@ -1,3 +1,6 @@
 .env
 site.env
 db-entrypoint.sql
+problems/*
+!problems/judge.yml
+!problems/aplusb
