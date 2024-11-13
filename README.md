@@ -22,6 +22,9 @@ The backend judge is based on `dmoj/runtimes-tier1`.
 
 3. The site should now be available at `http://localhost:8000/`.
 
+4. To add problems, write problem statements and configure settings via the admin interface.
+   Then add testcases/custom checkers under the `problems/` directory.
+
 4. To stop the containers, run
   ```
   docker compose stop
