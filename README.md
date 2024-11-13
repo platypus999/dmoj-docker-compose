@@ -25,7 +25,7 @@ The backend judge is based on `dmoj/runtimes-tier1`.
 4. To add problems, write problem statements and configure settings via the admin interface.
    Then add testcases/custom checkers under the `problems/` directory.
 
-4. To stop the containers, run
+5. To stop the containers, run
   ```
   docker compose stop
   ```
