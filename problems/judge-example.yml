@@ -1,7 +1,7 @@
 # This is the same ID you specified in the judge admin panel.
 id: Judge
 # The key this judge will use to authenticate with the site server, generated from the admin panel.
-key: "azrJwgc8tFNjivAbnIDMGIzWDr5fcbdRx7L8gAdnwXXkBLBQXgIbo5BTUaE5lFnDyBfGzw9LaXjG0kteduEQaKul9rUaoNcd"
+key: "<A secure key string for Judge>"
 # Where to look for problems on the local filesystem.
 # Any directory matching any of the following globs with an init.yml file is assumed to be a problem directory.
 problem_storage_globs:
@@ -41,9 +41,12 @@ runtime:
   clang: /usr/bin/clang
   clang++: /usr/bin/clang++
   gcc: /usr/bin/gcc
+  gcc11: /usr/bin/gcc
   g++: /usr/bin/g++
   g++11: /usr/bin/g++
-  g++14: /opt/gcc-5.1.0/bin/g++
+  g++14: /usr/bin/g++
+  g++17: /usr/bin/g++
+  g++20: /usr/bin/g++
   gfortran: /usr/bin/gfortran
   nasm: /usr/bin/nasm
   ld: /usr/bin/ld
@@ -67,3 +70,6 @@ runtime:
   racket-lib: /opt/racket/lib
   gnustep-config: /usr/bin/gnustep-config
   gobjc: /usr/bin/gcc
+  bash: /usr/bin/bash
+  pypy3: /opt/pypy3/bin/pypy3.10
+  ruby: /usr/bin/ruby
