@@ -1,6 +1,6 @@
 FROM dmoj/runtimes-tier2
 
-ARG TAG=master
+ARG TAG=komabafes2024
 RUN mkdir /judge /problems && cd /judge && \
 	curl -L https://github.com/platypus999/judge-server/archive/"${TAG}".tar.gz | tar -xz --strip-components=1 && \
     python3 -m venv --prompt=DMOJ /env && \

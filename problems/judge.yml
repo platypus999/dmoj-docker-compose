@@ -41,9 +41,12 @@ runtime:
   clang: /usr/bin/clang
   clang++: /usr/bin/clang++
   gcc: /usr/bin/gcc
+  gcc11: /usr/bin/gcc
   g++: /usr/bin/g++
   g++11: /usr/bin/g++
-  g++14: /opt/gcc-5.1.0/bin/g++
+  g++14: /usr/bin/g++
+  g++17: /usr/bin/g++
+  g++20: /usr/bin/g++
   gfortran: /usr/bin/gfortran
   nasm: /usr/bin/nasm
   ld: /usr/bin/ld
