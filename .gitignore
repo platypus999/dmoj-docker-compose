@@ -1,5 +1,5 @@
 .env
 site.env
 problems/*
-!problems/judge.yml
+!problems/judge-example.yml
 !problems/aplusb
