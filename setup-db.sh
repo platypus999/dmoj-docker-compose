@@ -1,9 +1,10 @@
 #!/bin/bash
 set -euxo pipefail
 
+python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py loaddata navbar
-python3 manage.py loaddata language_small
+python3 manage.py loaddata language_all
 python3 manage.py loaddata demo
 
 # uwsgi --ini uwsgi.ini
