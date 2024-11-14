@@ -41,7 +41,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "localhost:8000"]
       start_period: 5s
-      interval: 5s
+      interval: 20s
       timeout: 5s
       retries: 20
     depends_on:
