@@ -24,6 +24,9 @@ The backend judge is based on `dmoj/runtimes-tier1`.
 
 4. To add problems, write problem statements and configure settings via the admin interface.
    Then add testcases/custom checkers under the `problems/` directory.
+   Under the directory, `judge.yml` should be created.
+
+   The example is in `problems/judge-example.yml` (Fill in `JUDGE_KEY` with the same string as in `.env`).
 
 5. To stop the containers, run
   ```
