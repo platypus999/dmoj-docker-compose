@@ -7,26 +7,22 @@ services:
     image: mariadb:11.4
     restart: always
     environment:
-      - MARIADB_RANDOM_ROOT_PASSWORD=1
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
     volumes:
       - 'db-data:/var/lib/mysql:Z'
       - './db-entrypoint.sql:/docker-entrypoint-initdb.d/db-entrypoint.sql'
-    # ports:
-    #  - 3306:3306
-
-  bridged:
-    build: ./site
-    restart: always
-    stdin_open: true
-    env_file:
-      - site.env
-    command: python3 manage.py runbridged
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 10
     
   celery:
     build: ./site
     stdin_open: true
     env_file:
-      - site.env
+      - .env
     command: celery -A dmoj_celery worker
     depends_on:
       - redis
@@ -36,17 +32,36 @@ services:
     restart: always
     stdin_open: true
     env_file:
-      - site.env
-    volumes:   
+      - .env
+    volumes:
       - './setup-db.sh:/setup-db.sh'
     command: /setup-db.sh
     ports:
       - 8000:8000
+    healthcheck:
+      test: ["CMD", "curl", "localhost:8000"]
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 20
     depends_on:
-      - db
-      - redis
-      - bridged
-      - celery
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      celery:
+        condition: service_started
+
+  bridged:
+    build: ./site
+    restart: always
+    stdin_open: true
+    env_file:
+      - .env
+    command: python3 manage.py runbridged
+    depends_on:
+      site:
+        condition: service_healthy
 
   judge:
     build: ./judge
@@ -57,7 +72,7 @@ services:
       - SYS_PTRACE
     command: run -c /problems/judge.yml bridged ${JUDGE_NAME} ${JUDGE_KEY}
     depends_on:
-      - site
+      - bridged
 
 volumes:
   db-data:
