@@ -70,3 +70,6 @@ runtime:
   racket-lib: /opt/racket/lib
   gnustep-config: /usr/bin/gnustep-config
   gobjc: /usr/bin/gcc
+  bash: /usr/bin/bash
+  pypy3: /opt/pypy3/bin/pypy3.10
+  ruby: /usr/bin/ruby
